@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
+import indigo from '@material-ui/core/colors/indigo'
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
+
+const mainTheme = createMuiTheme({
+  palette: {
+      primary: {
+        main: indigo[800],
+      },
+      secondary: {
+          main: indigo[500],
+      },
+  },
+});
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      // ELEMENTS GO IN HERE
+      <MuiThemeProvider theme={mainTheme}>
+        <AppBar id="header" position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h6" color="white" className="headerText">
+              Outfittr
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div id="mainContainer" className="mainContainer mainContainerSmallScreen">
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
