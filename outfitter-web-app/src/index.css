@@ -2,20 +2,5 @@ html, height, body, .root {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: sans-serif;
-}
-
-.headerText {
-  font-size: 1.8em !important;
-}
-
-.mainContainer {
-  width: 100%;
-  height: calc(100% - 64px);
-}
-
-@media only screen and (max-width: 599px) {
-  .mainContainerSmallScreen {
-    height: calc(100% - 56px) !important;
-  }
+  font-family: "Roboto", "Arial", sans-serif;
 }

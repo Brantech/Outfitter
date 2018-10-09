@@ -22,6 +22,23 @@
   font-size: large;
 }
 
+.headerText {
+  font-size: 1.8em !important;
+}
+
+.mainContainer {
+  width: 100%;
+  height: calc(100% - 64px);
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 599px) {
+  .mainContainerSmallScreen {
+    padding-top: 64px;
+    height: calc(100% - 56px)!important;
+  }
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

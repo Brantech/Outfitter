@@ -1,43 +1,32 @@
 import React, { Component } from 'react';
 import './App.css';
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles'
-import indigo from '@material-ui/core/colors/indigo'
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import {MuiThemeProvider} from '@material-ui/core/styles'
+import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
+import { getMainTheme } from './Themes';
+import { getLoginPage } from './Login';
 
-const mainTheme = createMuiTheme({
-  palette: {
-      primary: {
-        main: indigo[800],
-      },
-      secondary: {
-          main: indigo[500],
-      },
-      text: {
-        primary: "rgba(255, 255, 255, 255)",
-      },
-  },
-});
-
-const pageTemplate = 
-    <MuiThemeProvider theme={mainTheme}>
-      <AppBar id="header" position="static" color="primary">
-        <Toolbar>
-          <Typography className="headerText" color="textPrimary">
-            Outfittr
-          </Typography>
-        </Toolbar>
-        </AppBar>
-          <div ref={(container) => {this.mainContainer = container}} className="mainContainer mainContainerSmallScreen">
-          </div>
-    </MuiThemeProvider>
+const mainContainerStyle = {
+  backgroundColor: getMainTheme().palette.secondary.light,
+}
 
 class App extends Component {
 
-  render() {
-    console.log(pageTemplate);
-    
-    return pageTemplate;
+  render() {    
+    return (
+        <MuiThemeProvider theme={getMainTheme}>
+          <AppBar id="header" position="static" color="primary">
+            <Toolbar>
+              <Typography className="headerText" color="textPrimary">
+                Outfittr
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Grid container justify="center" alignItems="center" style={mainContainerStyle} className="mainContainer mainContainerSmallScreen">
+            {getLoginPage()}
+          </Grid>
+        </MuiThemeProvider>);
   }
+
 }
 
 export default App;
