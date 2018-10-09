@@ -6,7 +6,7 @@ html, height, body, .root {
 }
 
 .headerText {
-  font-size: 1.8em;
+  font-size: 1.8em !important;
 }
 
 .mainContainer {
