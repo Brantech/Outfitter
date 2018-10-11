@@ -1,6 +1,7 @@
 import {createMuiTheme} from '@material-ui/core/styles'
 import {grey, lightGreen} from '@material-ui/core/colors'
 
+/** The color palette for the main theme. It is in a separate variable so the overrides can use it */
 const palette = {
     primary: {
         light: grey[600],
@@ -15,6 +16,7 @@ const palette = {
       },
 }
 
+/** Main theme for the web application  */
 const mainTheme = createMuiTheme({
     palette: palette,
 

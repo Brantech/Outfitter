@@ -1,0 +1,20 @@
+p {
+  cursor: default;
+}
+
+.headerText {
+  font-size: 1.8em !important;
+}
+
+.subPanelContainer {
+  width: 100%;
+  height: calc(100% - 64px);
+  overflow-y: auto;
+}
+
+@media only screen and (max-width: 599px) {
+  .subPanelContainerSmall {
+    padding-top: 64px;
+    height: calc(100% - 56px)!important;
+  }
+}
