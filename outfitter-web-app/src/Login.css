@@ -1,0 +1,11 @@
+:root {
+    --input-focus-border: black;
+}
+
+.loginField:focus-within fieldset {
+    border-color: var(--input-focus-border);
+}
+
+.loginField:focus-within label {
+    color: var(--input-focus-border);
+}
