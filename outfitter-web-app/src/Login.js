@@ -10,9 +10,6 @@ import { widgetWrap, ScreenEnum } from './MainContainer';
 /** Main theme for the web application */
 const mainTheme = getMainTheme();
 
-// TextField focused border color
-document.body.style.setProperty('--input-focus-border', mainTheme.palette.secondary.main);
-
 /** Styles for the login page */
 const style = {
     card: {
@@ -73,7 +70,7 @@ const loginPage =
 
                 <form noValidate>
                     <MuiThemeProvider theme={getMainTheme}>
-                        <TextField onChange={event => {onLoginFieldChange(event.target.value)}} className="loginField" label="Username" autoComplete="username" 
+                        <TextField onChange={event => {onUsernameFieldChange(event.target.value)}} className="loginField" label="Username" autoComplete="username" 
                                     margin="normal" inputProps={style.fieldText} fullWidth={true} variant="outlined"/>
                                     
                         <TextField onChange={event => {onPasswordFieldChange(event.target.value)}} className="loginField" label="Password" autoComplete="password" 
@@ -94,8 +91,8 @@ const loginPage =
         </Card>
     </Grid>
 
-/** Handles changes to the login field */
-function onLoginFieldChange(text) {
+/** Handles changes to the username field */
+function onUsernameFieldChange(text) {
     username = text;
 }
 

@@ -4,12 +4,19 @@ import {MuiThemeProvider} from '@material-ui/core/styles'
 import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
 import { getMainTheme } from './Themes';
 import { getLoginPage } from './Login';
+import { getRegisterPage } from './Register';
 
 /** Enums of the different screens */
 export const ScreenEnum = {Login: 0, Register: 1}
 
 /** Instance of MainContainer used for navigation */
 export var widgetWrap;
+
+/** Main theme for the web application */
+const mainTheme = getMainTheme();
+
+// TextField focused border color
+document.body.style.setProperty('--input-focus-border', mainTheme.palette.secondary.main);
 
 /** Style for the sub panel container */
 const subPanelContainerStyle = {
@@ -42,7 +49,7 @@ class MainContainer extends Component {
         widget = getLoginPage();
         break;
       case ScreenEnum.Register:
-        // TODO: Create register page
+        widget = getRegisterPage();
         break;
       default:
         // TODO: Handle bad state
@@ -50,7 +57,7 @@ class MainContainer extends Component {
 
     return (
       <MuiThemeProvider theme={getMainTheme}>
-        <AppBar position="static" color="primary">
+        <AppBar position="fixed" color="primary">
           <Toolbar>
             <Typography className="headerText" color="textPrimary">
               Outfittr

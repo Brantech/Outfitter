@@ -1,3 +1,7 @@
+:root {
+  --input-focus-border: black;
+}
+
 p {
   cursor: default;
 }
@@ -8,13 +12,14 @@ p {
 
 .subPanelContainer {
   width: 100%;
+  margin-top: 64px;
   height: calc(100% - 64px);
   overflow-y: auto;
 }
 
 @media only screen and (max-width: 599px) {
   .subPanelContainerSmall {
-    padding-top: 64px;
-    height: calc(100% - 56px)!important;
+    margin-top: 48px !important;
+    height: calc(100% - 48px)!important;
   }
 }

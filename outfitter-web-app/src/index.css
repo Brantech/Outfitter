@@ -1,3 +1,7 @@
+html {
+  overflow-y: hidden;
+}
+
 html, height, body, .root {
   margin: 0;
   padding: 0;
