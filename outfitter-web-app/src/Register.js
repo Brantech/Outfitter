@@ -1,13 +1,17 @@
 import React from 'react';
 import './Register.css';
+import gLogo from "./images/Google-Buttons/g-logo.png"
 import { Card, CardActions, CardContent, TextField, Button, Grid, IconButton } from '@material-ui/core';
 import {NavigateBeforeTwoTone} from '@material-ui/icons'
 import { getMainTheme } from './Themes';
 import {MuiThemeProvider} from '@material-ui/core/styles'
 import { widgetWrap, ScreenEnum } from './MainContainer';
+import TouchRipple from '@material-ui/core/ButtonBase'
 
 /** Main theme for the web application */
 const mainTheme = getMainTheme();
+
+document.documentElement.style.setProperty("--field-focus-border", mainTheme.palette.primary.main)
 
 /** Styles for the register page */
 const style = {
@@ -54,6 +58,33 @@ const style = {
         backgroundColor: mainTheme.palette.primary.main, 
         float: "right", 
         width: "100%"
+    },
+
+    gButton: {
+        display: "flex",
+        border: "1px solid gainsboro",
+        borderRadius: "4px",
+        cursor: "pointer",
+        width: "100%",
+        color: "white"
+    },
+
+    gButtonTextContainer: {
+        flex: "1", 
+        height: "50px",
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        backgroundColor: "#4285F4"
+    },
+
+    gButtonText: {
+        fontSize: "17px",
+        fontWeight: "500",
+        color: "white", 
+        userSelect: "none", 
+        cursor: "pointer",
+        fontFamily: "Roboto"
     },
 
     inputLabels: {
@@ -116,6 +147,14 @@ const registerPage =
                     <Grid item xs={12}>
                         <Button size="large" style={style.registerButton} onClick={onRegisterClick}>Register</Button>
                     </Grid>
+                    <Grid item xs={12}>
+                        <TouchRipple style={style.gButton} onClick={onGoogleRegisterClick}>
+                            <img src={gLogo} style={{width: "50px", height: "50px", userSelect: "none"}}/>
+                            <div style={style.gButtonTextContainer}>
+                                <p style={style.gButtonText}>Register using Google</p>
+                            </div>
+                        </TouchRipple>
+                    </Grid>
                 </Grid>
             </CardActions>
         </Card>
@@ -173,6 +212,10 @@ function onBackClick() {
 /** Register button click handler */
 function onRegisterClick() {
     console.log("Register clicked");
+}
+
+function onGoogleRegisterClick() {
+    
 }
 
 export function getRegisterPage() {

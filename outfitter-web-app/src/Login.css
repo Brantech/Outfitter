@@ -1,7 +1,7 @@
-.loginField:focus-within fieldset {
-    border-color: var(--input-focus-border);
+.loginField:focus-within:hover fieldset {
+    border-color: var(--field-focus-border)!important;
 }
 
 .loginField:focus-within label {
-    color: var(--input-focus-border);
+    color: var(--field-focus-border)!important;
 }

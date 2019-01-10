@@ -1,15 +1,12 @@
 import {createMuiTheme} from '@material-ui/core/styles'
-import {grey, lightGreen} from '@material-ui/core/colors'
 
 /** The color palette for the main theme. It is in a separate variable so the overrides can use it */
 const palette = {
     primary: {
-        light: grey[600],
-        main: grey[800],
-        dark: grey[900],
+        main: "#4285F4",
       },
       secondary: {
-          main: lightGreen[500],
+          main: "#FFF",
       },
       text: {
         primary: "rgba(255, 255, 255, 255)",
@@ -23,7 +20,7 @@ const mainTheme = createMuiTheme({
     overrides: {
         MuiInputLabel: {
             root: {
-                color: palette.primary.light,
+                color: palette.primary.main,
             },
 
             shrink: {
@@ -32,6 +29,11 @@ const mainTheme = createMuiTheme({
                 }
             },
         },
+        MuiInputBase: {
+            root: {
+                borderColor: palette.primary.main
+            }
+        }
     }
   });
 

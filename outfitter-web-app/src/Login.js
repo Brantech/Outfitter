@@ -1,14 +1,18 @@
 import React from 'react';
 import './Login.css';
+import gLogo from "./images/Google-Buttons/g-logo.png"
 import { Card, CardActions, CardContent, TextField, Button, Grid } from '@material-ui/core';
 import { getMainTheme } from './Themes';
 import {MuiThemeProvider} from '@material-ui/core/styles'
 import { widgetWrap, ScreenEnum } from './MainContainer';
+import TouchRipple from '@material-ui/core/ButtonBase'
 
 //region Styling
 
 /** Main theme for the web application */
 const mainTheme = getMainTheme();
+
+document.documentElement.style.setProperty("--field-focus-border", mainTheme.palette.primary.main)
 
 /** Styles for the login page */
 const style = {
@@ -21,12 +25,16 @@ const style = {
     title: {
         fontSize: "3em",
         cursor: "default",
-        color: mainTheme.palette.primary.light
+        color: mainTheme.palette.primary.main
     },
 
     fieldText: {
         style: {
             color: "black"
+        },
+
+        '&$focused': {
+            borderColor: mainTheme.palette.primary.main,
         }
     },
 
@@ -34,18 +42,50 @@ const style = {
         position: "absolute",
         bottom: "0",
         width: "100%",
+        padding: "16px"
     },
 
     loginButton: {
-        backgroundColor: mainTheme.palette.secondary.main, 
+        backgroundColor: mainTheme.palette.primary.main, 
         float: "right", 
-        width: "100%"
+        width: "100%",
+        height: "50px"
     },
 
     registerButton: {
-        backgroundColor: mainTheme.palette.primary.main, 
+        backgroundColor: mainTheme.palette.secondary.main, 
+        border: "1px solid gainsboro",
+        color: "black",
         float: "right", 
-        width: "100%"
+        width: "100%",
+        height: "50px"
+    },
+
+    gButton: {
+        display: "flex",
+        border: "1px solid gainsboro",
+        borderRadius: "4px",
+        cursor: "pointer",
+        width: "100%",
+        color: "white"
+    },
+
+    gButtonTextContainer: {
+        flex: "1", 
+        height: "50px",
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        backgroundColor: "#4285F4"
+    },
+
+    gButtonText: {
+        fontSize: "17px",
+        fontWeight: "500",
+        color: "white", 
+        userSelect: "none", 
+        cursor: "pointer",
+        fontFamily: "Roboto"
     },
 
     inputLabels: {
@@ -86,6 +126,14 @@ const loginPage =
                     <Grid item xs={12} sm={12} md={6}>
                         <Button onClick={onLoginClick} size="large" style={style.loginButton}>Login</Button>
                     </Grid>
+                    <Grid item xs={12}>
+                        <TouchRipple style={style.gButton} onClick={onGoogleSignInClick}>
+                            <img src={gLogo} style={{width: "50px", height: "50px", userSelect: "none"}}/>
+                            <div style={style.gButtonTextContainer}>
+                                <p style={style.gButtonText}>Login with Google</p>
+                            </div>
+                        </TouchRipple>
+                    </Grid>
                 </Grid>
             </CardActions>
         </Card>
@@ -103,18 +151,20 @@ function onPasswordFieldChange(text) {
 
 /** Click handler for register button */
 function onRegisterClick() {
-    console.log("Register Clicked");
     widgetWrap.displayScreen(ScreenEnum.Register);
 }
 
 /** Click handler for login button */
 function onLoginClick() {
-    console.log("Login Clicked");
 
     if(username == null || password == null || username.length === 0 || password.length === 0) {
         console.log("Username and password cannot be empty");
     }
     // TODO: Contact server and wait for a response
+}
+
+function onGoogleSignInClick() {
+
 }
 
 export function getLoginPage() {
