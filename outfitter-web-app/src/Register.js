@@ -6,6 +6,8 @@ import { getMainTheme } from './Themes';
 import {MuiThemeProvider} from '@material-ui/core/styles'
 import { widgetWrap, ScreenEnum } from './MainContainer';
 
+const registerURL = "http://localhost:3000/api/users";
+
 /** Main theme for the web application */
 const mainTheme = getMainTheme();
 
@@ -173,6 +175,18 @@ function onBackClick() {
 /** Register button click handler */
 function onRegisterClick() {
     console.log("Register clicked");
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if(this.readyState != 4) return;
+
+        console.log(this.status);
+        if(this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+    request.open("GET", registerURL, true)
+    request.send();
 }
 
 export function getRegisterPage() {

@@ -5,6 +5,8 @@ import { getMainTheme } from './Themes';
 import {MuiThemeProvider} from '@material-ui/core/styles'
 import { widgetWrap, ScreenEnum } from './MainContainer';
 
+const loginURL = "http://localhost:3000/api/users";
+
 //region Styling
 
 /** Main theme for the web application */
@@ -113,8 +115,20 @@ function onLoginClick() {
 
     if(username == null || password == null || username.length === 0 || password.length === 0) {
         console.log("Username and password cannot be empty");
+        return;
     }
-    // TODO: Contact server and wait for a response
+
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if(this.readyState != 4) return;
+
+        console.log(this.status);
+        if(this.status == 200) {
+            console.log(this.responseText);
+        }
+    }
+    request.open("GET", loginURL, true)
+    request.send();
 }
 
 export function getLoginPage() {
