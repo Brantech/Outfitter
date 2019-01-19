@@ -94,13 +94,13 @@ const style = {
 
 const registerPage = 
     <Grid item xs={7} style={style.container}>
-        <Card style={style.card}>
+        <Card style={style.card} elevation={5}>
             <CardContent>
                 <Grid container>
                     <Grid item xs={10} sm={11}>
                         <label style={style.title}>Register</label>
                     </Grid>
-                    <Grid item xs={2} sm={1} style={{textAlign: "center", display: "flex"}} justify="center" alignItems="center">
+                    <Grid item xs={2} sm={1} style={{textAlign: "center", display: "flex"}}>
                         <IconButton aria-label="Back" style={style.back} onClick={onBackClick}>
                             <NavigateBeforeTwoTone fontSize="default"/>
                         </IconButton>
@@ -205,13 +205,12 @@ function onPassword2FieldChange(text) {
 
 /** Back button click handler */
 function onBackClick() {
-    console.log("Back clicked");
     widgetWrap.displayScreen(ScreenEnum.Login);
 }
 
 /** Register button click handler */
 function onRegisterClick() {
-    console.log("Register clicked");
+    
 }
 
 function onGoogleRegisterClick() {

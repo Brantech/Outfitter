@@ -104,7 +104,7 @@ var password;
 /** Tags for the login widget */
 const loginPage = 
     <Grid item>
-        <Card style={style.card}>
+        <Card style={style.card} elevation={5}>
             <CardContent>
                 <label style={style.title}>Login</label>
 
@@ -128,7 +128,7 @@ const loginPage =
                     </Grid>
                     <Grid item xs={12}>
                         <TouchRipple style={style.gButton} onClick={onGoogleSignInClick}>
-                            <img src={gLogo} style={{width: "50px", height: "50px", userSelect: "none"}}/>
+                            <img src={gLogo} alt="Sign in with Google" style={{width: "50px", height: "50px", userSelect: "none"}}/>
                             <div style={style.gButtonTextContainer}>
                                 <p style={style.gButtonText}>Login with Google</p>
                             </div>
@@ -160,6 +160,8 @@ function onLoginClick() {
     if(username == null || password == null || username.length === 0 || password.length === 0) {
         console.log("Username and password cannot be empty");
     }
+
+    widgetWrap.displayScreen(ScreenEnum.Home);
     // TODO: Contact server and wait for a response
 }
 

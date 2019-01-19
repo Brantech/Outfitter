@@ -5,9 +5,10 @@ import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
 import { getMainTheme } from './Themes';
 import { getLoginPage } from './Login';
 import { getRegisterPage } from './Register';
+import { getHomePage } from './Home';
 
 /** Enums of the different screens */
-export const ScreenEnum = {Login: 0, Register: 1}
+export const ScreenEnum = {Login: 0, Register: 1, Home: 2}
 
 /** Instance of MainContainer used for navigation */
 export var widgetWrap;
@@ -50,6 +51,9 @@ class MainContainer extends Component {
         break;
       case ScreenEnum.Register:
         widget = getRegisterPage();
+        break;
+      case ScreenEnum.Home:
+        widget = getHomePage();
         break;
       default:
         // TODO: Handle bad state
