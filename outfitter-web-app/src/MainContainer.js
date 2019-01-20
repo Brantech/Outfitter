@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './MainContainer.css';
 import {MuiThemeProvider} from '@material-ui/core/styles'
-import { AppBar, Toolbar, Typography, Grid } from '@material-ui/core';
-import { getMainTheme } from './Themes';
-import { getLoginPage } from './Login';
-import { getRegisterPage } from './Register';
-import { getHomePage } from './Home';
+import { AppBar, Toolbar, Typography, Grid, Button } from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Palettes } from './Themes';
+import { LoginPage } from './Login';
+import { RegisterPage } from './Register';
+import { HomePage } from './Home';
 
 /** Enums of the different screens */
 export const ScreenEnum = {Login: 0, Register: 1, Home: 2}
@@ -14,58 +16,104 @@ export const ScreenEnum = {Login: 0, Register: 1, Home: 2}
 export var widgetWrap;
 
 /** Main theme for the web application */
-const mainTheme = getMainTheme();
+var mainTheme = Palettes.Default;
 
-// TextField focused border color
-document.body.style.setProperty('--input-focus-border', mainTheme.palette.secondary.main);
-
-/** Style for the sub panel container */
-const subPanelContainerStyle = {
-  backgroundColor: getMainTheme().palette.secondary.light,
-};
+/** Widget being displayed in the main container */
+var widget;
 
 /** In charge of navigation and displaying sub panels for the web application */
-class MainContainer extends Component {
+export class MainContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      screen: ScreenEnum.Login
+      screen: ScreenEnum.Login,
+      anchorEl: null,
+      themeName: "Default"
     };
 
     widgetWrap = this;
   }
 
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  selectTheme(theme, name) {
+    this.setState({anchorEl: null, selectedTheme: theme, themeName: name});
+    mainTheme = theme;
+  }
+  
   /** Changes the state to display the screen */
   displayScreen(screen) {
     this.setState({screen: screen});
   }
 
+  getSelectedTheme = () => {
+    return mainTheme;
+  }
+
   render() {
+    document.body.style.setProperty('--input-focus-border', mainTheme.palette.secondary.main);
+
+    const subPanelContainerStyle = {
+      backgroundColor: mainTheme.palette.secondary.main,
+    };
+
     const screen = this.state.screen;
-    var widget;
 
     switch(screen){
       case ScreenEnum.Login:
-        widget = getLoginPage();
+        widget = <LoginPage theme={mainTheme}/>;
         break;
       case ScreenEnum.Register:
-        widget = getRegisterPage();
+        widget = <RegisterPage theme={mainTheme}/>;
         break;
       case ScreenEnum.Home:
-        widget = getHomePage();
+        widget = <HomePage theme={mainTheme}/>;
         break;
       default:
         // TODO: Handle bad state
     }
 
     return (
-      <MuiThemeProvider theme={getMainTheme}>
+      <MuiThemeProvider theme={mainTheme}>
         <AppBar position="fixed" color="primary">
           <Toolbar>
-            <Typography className="headerText" color="textPrimary">
+            <Typography className="headerText" color="textPrimary" variant="body2">
               Outfittr
             </Typography>
+            <div style={{marginLeft: "auto", display: "flex"}}>
+              <p style={{fontSize: "12px"}}>Theme:</p>
+              <Button 
+                aria-owns={Boolean(this.state.anchorEl) ? "themeChooser" : undefined}
+                aria-haspopup="true"
+                onClick={this.handleMenu}
+                style={{paddingLeft: "8px"}}
+              >
+                {this.state.themeName}
+              </Button>
+              <Menu id="themeChooser" 
+                  anchorEl={this.state.anchorEl} 
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(this.state.anchorEl)}
+                  onClose={this.handleClose}
+                >
+                <MenuItem style={{color: "black"}} onClick={() => this.selectTheme(Palettes.Default, "Default")}>Default</MenuItem>
+                <MenuItem style={{color: "black"}} onClick={() => this.selectTheme(Palettes.Dark, "Dark")}>Dark</MenuItem>
+              </Menu>
+            </div>
           </Toolbar>
         </AppBar>
         <Grid container justify="center" alignItems="center" style={subPanelContainerStyle} className="subPanelContainer subPanelContainerSmall">
@@ -75,6 +123,10 @@ class MainContainer extends Component {
     );
   }
 
+}
+
+export function getCurTheme() {
+  return mainTheme;
 }
 
 export default MainContainer;

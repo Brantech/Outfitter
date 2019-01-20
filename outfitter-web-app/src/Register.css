@@ -7,3 +7,7 @@
 .registerField:focus-within label {
     color: var(--field-focus-border);
 }
+
+fieldset {
+    border-color: var(--field-focus-border)!important;
+}
