@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css';
+import { widgetWrap, ScreenEnum } from './MainContainer';
 import { Grid, CardContent, Card, IconButton } from '@material-ui/core';
 import {Group, Assignment, Style, Whatshot, ArrowForward, ArrowBack} from '@material-ui/icons'
 import TouchRipple from '@material-ui/core/ButtonBase'
@@ -143,12 +144,16 @@ export class HomePage extends React.Component {
         return ret
     }
 
+    closet() {
+        widgetWrap.displayScreen(ScreenEnum.Closet);
+    }
+
     render() {
         this.style = style(this.props.theme);
 
         var leftArrowStyle = {
             backgroundColor: this.props.theme.palette.primary.main,
-            color: this.props.theme.palette.highlight.main,
+            color: this.props.theme.palette.primary.contrastText,
             marginRight: "24px",
             visibility: this.state.showLeftArrow ? "visible" : "hidden"
         }
@@ -201,7 +206,7 @@ export class HomePage extends React.Component {
                             </Grid>
                             <Grid item xs={6} md={3}>
                                 <Card style={this.style.buttons} elevation={5}>
-                                    <TouchRipple style={this.style.buttons}>
+                                    <TouchRipple style={this.style.buttons} onClick={() => this.closet()}>
                                         <Style style={{fontSize: "4em"}}/>
                                         <p style={{margin: "0"}}>Closet</p>
                                     </TouchRipple>
