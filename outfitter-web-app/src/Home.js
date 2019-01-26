@@ -68,7 +68,7 @@ class Outfit extends React.Component {
         return (
             <Grid item xs={12} md={6} xl={3}>
                 <Card style={container}>
-                    <img src={testOutfit} style={{userSelect: "none"}} draggable="false"/>
+                    <img alt="" src={testOutfit} style={{userSelect: "none"}} draggable="false"/>
                 </Card>
             </Grid>
         )
@@ -109,7 +109,7 @@ export class HomePage extends React.Component {
     }
 
     leftArrow() {
-        if(this.page != 0) {
+        if(this.page !== 0) {
             this.page--;
         }
     

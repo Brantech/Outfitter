@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import './Login.css';
-import gLogo from "./images/Google-Buttons/g-logo.png";
 import { Card, CardActions, CardContent, TextField, Button, Grid } from '@material-ui/core';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import { widgetWrap, ScreenEnum } from './MainContainer';
-import TouchRipple from '@material-ui/core/ButtonBase';
+import {Auth} from 'aws-amplify';
+import aws_exports from './aws-exports';
+import GoogleLogin from 'react-google-login';
+
+Auth.configure(aws_exports);
 
 //region Styling
 
@@ -90,6 +93,10 @@ const style = (theme) => {
 
 //endregion
 
+function progressLogIn(session) {
+    console.log(session);
+}
+
 export class LoginPage extends Component {
     constructor(props) {
         super(props);
@@ -130,13 +137,32 @@ export class LoginPage extends Component {
         if(this.state.username == null || this.state.password == null || this.state.username.length === 0 || this.state.password.length === 0) {
             console.log("Username and password cannot be empty");
         }
+        Auth.signOut().catch(err => console.log(err))
+
+        Auth.signIn({
+            username: this.state.username,
+            password: this.state.password,
+        }).then(user => progressLogIn(user.signInUserSession))
+        .catch(err => console.log(err));
 
         widgetWrap.displayScreen(ScreenEnum.Home);
         // TODO: Contact server and wait for a response
     }
 
-    onGoogleSignInClick() {
+    async onGoogleSignInClick(res) {
+        let user = {
+            username: res.profileObj.googleId,
+            email: res.profileObj.email,
+            family_name: res.profileObj.familyName,
+            name: res.profileObj.givenName
+        }
 
+        Auth.signOut().catch(err => console.log(err))
+        const cred = await Auth.federatedSignIn(
+            'google',
+            {token: res.Zi.id_token, expires_at: res.Zi.expires_at},
+            user
+        )
     }
 
     render() {
@@ -147,16 +173,13 @@ export class LoginPage extends Component {
                 <Card style={this.style.card} elevation={5}>
                     <CardContent>
                         <label style={this.style.title}>Login</label>
-
-                        <form noValidate>
-                            <MuiThemeProvider theme={this.state.mainTheme}>
-                                <TextField onChange={event => {this.onUsernameFieldChange(event.target.value)}} className="loginField" label="Username" autoComplete="username" 
-                                            margin="normal" inputProps={this.style.fieldText} fullWidth={true} variant="outlined"/>
-                                            
-                                <TextField onChange={event => {this.onPasswordFieldChange(event.target.value)}} className="loginField" label="Password" autoComplete="password" 
-                                            margin="normal" type="password" inputProps={this.style.fieldText} fullWidth={true} variant="outlined"/>
-                            </MuiThemeProvider>
-                        </form>
+                        <MuiThemeProvider theme={this.state.mainTheme}>
+                            <TextField onChange={event => {this.onUsernameFieldChange(event.target.value)}} className="loginField" label="Username" autoComplete="new-username" 
+                                        margin="normal" inputProps={this.style.fieldText} fullWidth={true} variant="outlined"/>
+                                        
+                            <TextField onChange={event => {this.onPasswordFieldChange(event.target.value)}} className="loginField" label="Password" autoComplete="new-password" 
+                                        margin="normal" type="password" inputProps={this.style.fieldText} fullWidth={true} variant="outlined"/>
+                        </MuiThemeProvider>
                     </CardContent>
                     <CardActions style={this.style.cardAction}>
                         <Grid container spacing={8}>
@@ -167,12 +190,15 @@ export class LoginPage extends Component {
                                 <Button onClick={() => this.onLoginClick()} size="large" style={this.style.loginButton}>Login</Button>
                             </Grid>
                             <Grid item xs={12}>
-                                <TouchRipple style={this.style.gButton} onClick={() => this.onGoogleSignInClick()}>
-                                    <img src={gLogo} alt="Sign in with Google" style={{width: "50px", height: "50px", userSelect: "none"}} draggable="false"/>
-                                    <div style={this.style.gButtonTextContainer}>
-                                        <p style={style.gButtonText}>Login with Google</p>
-                                    </div>
-                                </TouchRipple>
+                                <GoogleLogin
+                                    className="gButton"
+                                    theme="dark"
+                                    scope="profile email openid"
+                                    clientId='507614168208-7dsdu2m7imgq6t0dvbb32pt85h1j67bo.apps.googleusercontent.com'
+                                    buttonText="Login in with Google"
+                                    onSuccess={(res) => this.onGoogleSignInClick(res)}
+                                    onFailure={(err) => console.log(err)}
+                                    />
                             </Grid>
                         </Grid>
                     </CardActions>
