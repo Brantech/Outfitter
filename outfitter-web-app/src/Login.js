@@ -95,6 +95,16 @@ const style = (theme) => {
 
 function progressLogIn(session) {
     console.log(session);
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if(req.readyState === 4 && req.status === 200) {
+            widgetWrap.displayScreen(ScreenEnum.Home);
+        }
+    }
+    req.open("GET", "http://www.outfittr.net:3000/users/" + session.accessToken.jwtToken, true);
+    req.send(null);
+
+    
 }
 
 export class LoginPage extends Component {
@@ -144,9 +154,6 @@ export class LoginPage extends Component {
             password: this.state.password,
         }).then(user => progressLogIn(user.signInUserSession))
         .catch(err => console.log(err));
-
-        widgetWrap.displayScreen(ScreenEnum.Home);
-        // TODO: Contact server and wait for a response
     }
 
     async onGoogleSignInClick(res) {
@@ -158,7 +165,7 @@ export class LoginPage extends Component {
         }
 
         Auth.signOut().catch(err => console.log(err))
-        const cred = await Auth.federatedSignIn(
+        await Auth.federatedSignIn(
             'google',
             {token: res.Zi.id_token, expires_at: res.Zi.expires_at},
             user
