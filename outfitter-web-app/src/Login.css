@@ -9,3 +9,7 @@
 fieldset {
     border-color: var(--field-focus-border)!important;
 }
+
+.gButton {
+    width: 100%!important;
+}

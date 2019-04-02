@@ -8,9 +8,10 @@ import { Palettes } from './Themes';
 import { LoginPage } from './Login';
 import { RegisterPage } from './Register';
 import { HomePage } from './Home';
+import { ClosetPage } from './Closet';
 
 /** Enums of the different screens */
-export const ScreenEnum = {Login: 0, Register: 1, Home: 2}
+export const ScreenEnum = {Login: 0, Register: 1, Home: 2, Closet: 3}
 
 /** Instance of MainContainer used for navigation */
 export var widgetWrap;
@@ -75,6 +76,9 @@ export class MainContainer extends Component {
         break;
       case ScreenEnum.Home:
         widget = <HomePage theme={mainTheme}/>;
+        break;
+      case ScreenEnum.Closet:
+        widget = <ClosetPage theme={mainTheme}/>;
         break;
       default:
         // TODO: Handle bad state

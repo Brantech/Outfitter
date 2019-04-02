@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './Register.css';
-import gLogo from "./images/Google-Buttons/g-logo.png"
 import { Card, CardActions, CardContent, TextField, Button, Grid, IconButton } from '@material-ui/core';
 import {NavigateBeforeTwoTone} from '@material-ui/icons'
 import {MuiThemeProvider} from '@material-ui/core/styles'
 import { widgetWrap, ScreenEnum } from './MainContainer';
-import TouchRipple from '@material-ui/core/ButtonBase'
+import {Auth} from 'aws-amplify';
+import aws_exports from './aws-exports';
+
+Auth.configure(aws_exports);
 
 //region Styling
 
@@ -160,7 +162,25 @@ export class RegisterPage extends Component {
 
     /** Register button click handler */
     onRegisterClick() {
-        
+        // if(this.state.password1 !== this.state.password2) {
+        //     return;
+        // }
+
+        // if(this.state.email1 !== this.state.email2) {
+        //     return;
+        // }
+
+
+        Auth.signUp({
+            username: this.state.username,
+            password: this.state.password1,
+            attributes: {
+                email: this.state.email1,
+                family_name: this.state.lname,
+                name: this.state.fname
+            }, 
+
+        }).then(data => console.log(data)).catch(e => console.log(e.message));
     }
 
     onGoogleRegisterClick() {
@@ -189,11 +209,11 @@ export class RegisterPage extends Component {
                             <MuiThemeProvider theme={this.props.theme}>
                                 <Grid container spacing={8}>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField className="registerField" label="First Name" autoComplete="on" onChange={event => {this.onFnameFieldChange(event.target.value)}}
+                                        <TextField className="registerField" label="First Name" autoComplete="fname" onChange={event => {this.onFnameFieldChange(event.target.value)}}
                                                 margin="normal" inputProps={this.style.fieldText} fullWidth={true} variant="outlined"/>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField className="registerField" label="Last Name" autoComplete="lname" autoComplete="on" onChange={event => {this.onLnameFieldChange(event.target.value)}}
+                                        <TextField className="registerField" label="Last Name" autoComplete="lname" onChange={event => {this.onLnameFieldChange(event.target.value)}}
                                                 margin="normal" inputProps={this.style.fieldText} fullWidth={true} variant="outlined"/>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -224,14 +244,6 @@ export class RegisterPage extends Component {
                         <Grid container spacing={8}>
                             <Grid item xs={12}>
                                 <Button size="large" style={this.style.registerButton} onClick={() => this.onRegisterClick()} draggable="false">Register</Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TouchRipple style={this.style.gButton} onClick={() => this.onGoogleRegisterClick()}>
-                                    <img src={gLogo} style={{width: "50px", height: "50px", userSelect: "none"}} draggable="false"/>
-                                    <div style={this.style.gButtonTextContainer}>
-                                        <p style={this.style.gButtonText}>Register using Google</p>
-                                    </div>
-                                </TouchRipple>
                             </Grid>
                         </Grid>
                     </CardActions>

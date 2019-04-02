@@ -7,6 +7,7 @@ const defaultPalette = {
       },
       secondary: {
           main: "#FFF",
+          lighter: "#8c8c8c",
       },
       highlight: {
         main: "#4285F4",
@@ -25,6 +26,7 @@ const darkPalette = {
     },
     secondary: {
         main: "#424242",
+        lighter: "#8c8c8c",
     },
     highlight: {
         main: "#FFF",
