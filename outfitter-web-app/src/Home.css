@@ -1,0 +1,22 @@
+.contentContainer {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.outfits {
+    height: 50%;
+}
+
+.outfitContainer {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 12px;
+}
