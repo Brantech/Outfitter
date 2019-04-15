@@ -1,0 +1,48 @@
+<div>
+  <h1>User Count: </h1>
+  <h2>{{data.length}}</h2>
+  <div id="chartContainer" style="height: 370px; max-width: 600px;margin-left:auto;margin-right:auto;"></div>
+
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let user of data; index as index" style="max-width: 600px;">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{user.username}}
+        </mat-panel-title>
+        <mat-panel-description>
+          id: {{user._id}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <button mat-button (click)="deleteUser(index)">Delete User</button>
+      <p>
+        Garment Count: {{user.garments.length}} <br>
+        Outfits Worn: {{user.outfits.length}}<br>
+      </p>
+
+      <div *ngIf="user.outfits.length !== 0">
+        <div *ngFor="let outfit of user.outfits">
+          <p>
+            <span *ngFor="let garment of outfit.garments">
+              id: {{garment}} <br>
+            </span>
+            <span>
+              Rating: {{outfit.rating}} <br>
+            </span>
+            <span>
+              Shared: {{outfit.shared}} <br>
+            </span>
+            <span>
+              Date Worn: {{toReadableStr(outfit.dateWorn)}} <br>
+            </span>
+            <span>
+              Number of Ratings: {{outfit.numberOfRatings}} <br>
+            </span>
+            <span>
+              Community Rating: {{outfit.communityRating}} <br>
+            </span>
+          </p>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
